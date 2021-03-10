@@ -2,13 +2,15 @@
 // Created by Andrei on 10/03/2021.
 //
 
-#ifdef WIN32
 #undef mDLLIMPORTEXPORT
+#ifdef WIN32
 #ifdef mKEY_PRESS_WATCHER
 #define mDLLIMPORTEXPORT __declspec(dllexport)
 #else
 #define mDLLIMPORTEXPORT __declspec(dllimport)
 #endif
+#else
+#define mDLLIMPORTEXPORT
 #endif
 
 #ifndef KEY_EVENT_HANDLER_KEY_PRESS_WATCHER_HPP
@@ -24,21 +26,21 @@
 
 class mDLLIMPORTEXPORT KeyPressWatcher {
 public:
-    static void registerListener(Clickable*);
+    static std::shared_ptr<KeyPressWatcher> getInstance();
 
-    static void unregisterListener(Clickable*);
+    void registerListener(const Clickable *);
+
+    void unregisterListener(const Clickable *);
 
     virtual ~KeyPressWatcher() noexcept;
 
 private:
     KeyPressWatcher();
 
-    std::shared_ptr<KeyPressWatcher> getInstance();
-
 private:
     static std::shared_ptr<KeyPressWatcher> instance;
     std::promise<void> exitSignal;
-    std::vector<Clickable> registeredListeners;
+    std::vector<const Clickable *> registeredListeners;
 };
 
 

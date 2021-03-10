@@ -16,10 +16,11 @@
 
 #include "enums.hpp"
 #include <vector>
+#include <algorithm>
 
 class KeyPressEventBuilder;
 
-class mDLLIMPORTEXPORT KeyPressEvent {
+class KeyPressEvent {
 public:
     bool isKeyPressed(Key key);
 
@@ -34,7 +35,7 @@ private:
     friend class KeyPressEventBuilder;
 };
 
-class mDLLIMPORTEXPORT KeyPressEventBuilder {
+class KeyPressEventBuilder {
 public:
     explicit KeyPressEventBuilder(Key key);
 
