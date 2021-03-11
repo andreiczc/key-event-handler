@@ -15,7 +15,7 @@ public:
 
     virtual ~Clickable() noexcept;
 
-    virtual void onClick(KeyPressEvent event) = 0;
+    virtual void onClick(const KeyPressEvent &event) = 0;
 };
 
 

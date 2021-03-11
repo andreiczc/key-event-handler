@@ -14,9 +14,9 @@ class KeyPressEventBuilder;
 
 class mDLLIMPORTEXPORT KeyPressEvent {
 public:
-    bool isKeyPressed(Key key);
+    bool isKeyPressed(Key key) const;
 
-    bool isModifierPressed(Modifier modifier);
+    bool isModifierPressed(Modifier modifier) const;
 
 private:
     explicit KeyPressEvent(Key key);

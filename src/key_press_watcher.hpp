@@ -11,14 +11,15 @@
 #include <thread>
 
 #include "clickable.hpp"
+#include "key_press_watcher_implementation.hpp"
 
 class KeyPressWatcher {
 public:
     static std::shared_ptr<KeyPressWatcher> getInstance();
 
-    void registerListener(const Clickable *);
+    void registerListener(Clickable *);
 
-    void unregisterListener(const Clickable *);
+    void unregisterListener(Clickable *);
 
     virtual ~KeyPressWatcher() noexcept;
 
@@ -27,11 +28,11 @@ private:
 
 private:
     static std::shared_ptr<KeyPressWatcher> instance;
-    std::vector<const Clickable *> registeredListeners;
-    std::atomic_flag exitSignal;
 
+    std::unique_ptr<KeyPressWatcherImplementation> implementation;
+    std::vector<Clickable *> registeredListeners;
+    std::atomic_flag exitSignal;
     std::thread logicThread;
 };
-
 
 #endif //KEY_EVENT_HANDLER_KEY_PRESS_WATCHER_HPP

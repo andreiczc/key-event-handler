@@ -14,7 +14,7 @@ class Test : public Clickable {
 public:
     Test() : Clickable() {};
 
-    void onClick(KeyPressEvent event) override {
+    void onClick(const KeyPressEvent &event) override {
         if (event.isKeyPressed(Key::A)) {
             cout << "A is pressed" << endl;
         }
@@ -25,7 +25,7 @@ public:
 
 int main() {
     Test test;
-    
+
     this_thread::sleep_for(chrono::seconds(15));
 
     test.mock();

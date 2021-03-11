@@ -9,13 +9,12 @@
 KeyPressEvent::KeyPressEvent(Key key) : pressedKey(key) {}
 
 
-
-bool KeyPressEvent::isModifierPressed(Modifier modifier) {
+bool KeyPressEvent::isModifierPressed(Modifier modifier) const {
     const auto iterator = std::find(this->modifiersPressed.begin(),
                                     this->modifiersPressed.end(), modifier);
     return iterator != this->modifiersPressed.end();
 }
 
-bool KeyPressEvent::isKeyPressed(Key key) {
+bool KeyPressEvent::isKeyPressed(Key key) const {
     return key == this->pressedKey;
 }

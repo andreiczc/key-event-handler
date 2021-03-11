@@ -6,8 +6,15 @@
 
 #include <iostream>
 #include <chrono>
+#include <memory>
 
 #include "key_press_event.hpp"
+
+#ifdef WIN32
+
+#include "windows_key_press_watcher_implementation.hpp"
+
+#endif
 
 using namespace std;
 
@@ -22,13 +29,20 @@ std::shared_ptr<KeyPressWatcher> KeyPressWatcher::getInstance() {
 }
 
 KeyPressWatcher::KeyPressWatcher() {
-    logicThread = thread([](atomic_flag *signal) {
-        if (!signal->test()) {
-            while (true) {
-                std::cout << "hello world" << std::endl;
+#ifdef WIN32
+    this->implementation = std::make_unique<WindowsKeyPressWatcherImplementation>();
+#endif
+
+    logicThread = thread([this]() {
+        while (!this->exitSignal.test()) {
+            auto keyPressEvent = this->implementation->monitorKeypress();
+            for (auto handler : instance->registeredListeners) {
+                handler->onClick(keyPressEvent);
             }
+
+            this_thread::sleep_for(chrono::seconds(1));
         }
-    }, &this->exitSignal);
+    });
 }
 
 KeyPressWatcher::~KeyPressWatcher() noexcept {
@@ -40,14 +54,13 @@ KeyPressWatcher::~KeyPressWatcher() noexcept {
     }
 }
 
-void KeyPressWatcher::registerListener(const Clickable *clickable) {
+void KeyPressWatcher::registerListener(Clickable *clickable) {
     instance->registeredListeners.emplace_back(clickable);
 }
 
-void KeyPressWatcher::unregisterListener(const Clickable *clickable) {
+void KeyPressWatcher::unregisterListener(Clickable *clickable) {
     const auto iterator = std::find(instance->registeredListeners.begin(), instance->registeredListeners.end(),
                                     clickable);
 
     instance->registeredListeners.erase(iterator);
-
 }
