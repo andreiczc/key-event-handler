@@ -1,6 +1,0 @@
-C:/repos/key-event-handler/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
-C:/repos/key-event-handler/out/build/x64-Debug (default)/CMakeFiles/key_event_handler.dir
-C:/repos/key-event-handler/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
-C:/repos/key-event-handler/out/build/x64-Debug (default)/src/CMakeFiles/key_press_watcher.dir
-C:/repos/key-event-handler/out/build/x64-Debug (default)/src/CMakeFiles/edit_cache.dir
-C:/repos/key-event-handler/out/build/x64-Debug (default)/src/CMakeFiles/rebuild_cache.dir
