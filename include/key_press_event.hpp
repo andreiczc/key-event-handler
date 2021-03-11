@@ -2,25 +2,17 @@
 // Created by Andrei on 10/03/2021.
 //
 
-#ifdef WIN32
-#undef mDLLIMPORTEXPORT
-#ifdef mKEY_PRESS_WATCHER
-#define mDLLIMPORTEXPORT __declspec(dllexport)
-#else
-#define mDLLIMPORTEXPORT __declspec(dllimport)
-#endif
-#endif
-
 #ifndef KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP
 #define KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP
 
-#include "enums.hpp"
 #include <vector>
-#include <algorithm>
+#include "enums.hpp"
+
+#include "define_dll_scope.hpp"
 
 class KeyPressEventBuilder;
 
-class KeyPressEvent {
+class mDLLIMPORTEXPORT KeyPressEvent {
 public:
     bool isKeyPressed(Key key);
 
@@ -33,18 +25,6 @@ private:
     std::vector<Modifier> modifiersPressed;
 
     friend class KeyPressEventBuilder;
-};
-
-class KeyPressEventBuilder {
-public:
-    explicit KeyPressEventBuilder(Key key);
-
-    KeyPressEventBuilder &addModifier(Modifier modifier);
-
-    KeyPressEvent build();
-
-private:
-    KeyPressEvent keyPressEvent;
 };
 
 #endif //KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP

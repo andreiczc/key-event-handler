@@ -6,9 +6,11 @@
 #include "key_press_watcher.hpp"
 
 Clickable::Clickable() {
-    KeyPressWatcher::registerListener(this);
+    auto instance = KeyPressWatcher::getInstance();
+    instance->registerListener(this);
 }
 
 Clickable::~Clickable() noexcept {
-    KeyPressWatcher::unregisterListener(this);
+    auto instance = KeyPressWatcher::getInstance();
+    instance->unregisterListener(this);
 }

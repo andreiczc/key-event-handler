@@ -7,7 +7,9 @@
 
 #include "key_press_event.hpp"
 
-class Clickable {
+#include "define_dll_scope.hpp"
+
+class mDLLIMPORTEXPORT Clickable {
 public:
     explicit Clickable();
 

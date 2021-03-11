@@ -4,19 +4,11 @@
 
 #include "key_press_event.hpp"
 
+#include <algorithm>
+
 KeyPressEvent::KeyPressEvent(Key key) : pressedKey(key) {}
 
-KeyPressEventBuilder::KeyPressEventBuilder(Key key) : keyPressEvent(key) {}
 
-KeyPressEventBuilder &KeyPressEventBuilder::addModifier(Modifier modifier) {
-    this->keyPressEvent.modifiersPressed.push_back(modifier);
-
-    return *this;
-}
-
-KeyPressEvent KeyPressEventBuilder::build() {
-    return this->keyPressEvent;
-}
 
 bool KeyPressEvent::isModifierPressed(Modifier modifier) {
     const auto iterator = std::find(this->modifiersPressed.begin(),

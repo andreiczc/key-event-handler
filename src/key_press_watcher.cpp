@@ -7,6 +7,8 @@
 #include <iostream>
 #include <chrono>
 
+#include "key_press_event.hpp"
+
 using namespace std;
 
 shared_ptr<KeyPressWatcher> KeyPressWatcher::instance(nullptr);
@@ -20,24 +22,22 @@ std::shared_ptr<KeyPressWatcher> KeyPressWatcher::getInstance() {
 }
 
 KeyPressWatcher::KeyPressWatcher() {
-    thread watcherThread([](future<void> future) {
-        if (future.wait_for(chrono::milliseconds(1)) == future_status::timeout) {
-            int i = 2;
-            while (i--) {
+    logicThread = thread([](atomic_flag *signal) {
+        if (!signal->test()) {
+            while (true) {
                 std::cout << "hello world" << std::endl;
-
-                std::this_thread::sleep_for(std::chrono::seconds(15));
             }
-        } else {
-            cout << "stopping thread" << endl;
         }
-    }, move(this->exitSignal.get_future()));
-
-    watcherThread.join();
+    }, &this->exitSignal);
 }
 
 KeyPressWatcher::~KeyPressWatcher() noexcept {
-    this->exitSignal.set_value();
+    this->exitSignal.test_and_set();
+
+    if (this->logicThread.joinable()) {
+        cout << "joining logic thread" << endl;
+        this->logicThread.join();
+    }
 }
 
 void KeyPressWatcher::registerListener(const Clickable *clickable) {
@@ -48,9 +48,6 @@ void KeyPressWatcher::unregisterListener(const Clickable *clickable) {
     const auto iterator = std::find(instance->registeredListeners.begin(), instance->registeredListeners.end(),
                                     clickable);
 
-    if (instance->registeredListeners.size() == 1 && iterator != instance->registeredListeners.end()) {
-        instance.reset();
-    }
-
     instance->registeredListeners.erase(iterator);
+
 }

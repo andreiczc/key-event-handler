@@ -3,12 +3,32 @@
 //
 
 #include <iostream>
-#include "src/key_press_watcher.hpp"
+#include <thread>
+#include <chrono>
+
+#include "clickable.hpp"
 
 using namespace std;
 
-int main() {
+class Test : public Clickable {
+public:
+    Test() : Clickable() {};
 
+    void onClick(KeyPressEvent event) override {
+        if (event.isKeyPressed(Key::A)) {
+            cout << "A is pressed" << endl;
+        }
+    }
+
+    void mock() {}
+};
+
+int main() {
+    Test test;
+    
+    this_thread::sleep_for(chrono::seconds(15));
+
+    test.mock();
 
     return 0;
 }
