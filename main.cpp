@@ -12,23 +12,29 @@ using namespace std;
 
 class Test : public Clickable {
 public:
-    Test() : Clickable() {};
+	Test() : Clickable() {};
 
-    void onClick(const KeyPressEvent &event) override {
-        if (event.isKeyPressed(Key::A)) {
-            cout << "A is pressed" << endl;
-        }
-    }
+	void onClick(const KeyPressEvent& event) override {
+		if (event.isKeyPressed(Key::A)) {
+			cout << "A is pressed" << endl;
+		}
+		else if (event.isKeyPressed(Key::D9)) {
+			cout << "Digit 9 is pressed" << endl;
+		}
+		else if (event.isModifierPressed(Modifier::Esc)) {
+			cout << "Escape is pressed" << endl;
+		}
+	}
 
-    void mock() {}
+	void mock() {}
 };
 
 int main() {
-    Test test;
+	Test test;
 
-    this_thread::sleep_for(chrono::seconds(15));
+	this_thread::sleep_for(chrono::seconds(60));
 
-    test.mock();
+	test.mock();
 
-    return 0;
+	return 0;
 }

@@ -4,14 +4,19 @@
 
 #include "key_press_event_builder.hpp"
 
-KeyPressEventBuilder::KeyPressEventBuilder(Key key) : keyPressEvent(key) {}
+KeyPressEventBuilder& KeyPressEventBuilder::addModifier(Modifier modifier) {
+	keyPressEvent.modifiersPressed.insert(static_cast<int>(modifier));
 
-KeyPressEventBuilder &KeyPressEventBuilder::addModifier(Modifier modifier) {
-    this->keyPressEvent.modifiersPressed.push_back(modifier);
+	return *this;
+}
 
-    return *this;
+KeyPressEventBuilder& KeyPressEventBuilder::addKey(Key key)
+{
+	keyPressEvent.keysPressed.insert(static_cast<int>(key));
+
+	return *this;
 }
 
 KeyPressEvent KeyPressEventBuilder::build() {
-    return this->keyPressEvent;
+	return this->keyPressEvent;
 }

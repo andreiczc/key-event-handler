@@ -40,7 +40,7 @@ KeyPressWatcher::KeyPressWatcher() {
                 handler->onClick(keyPressEvent);
             }
 
-            this_thread::sleep_for(chrono::seconds(1));
+            this_thread::sleep_for(chrono::milliseconds(50));
         }
     });
 }

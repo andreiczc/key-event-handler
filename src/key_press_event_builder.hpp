@@ -9,14 +9,16 @@
 
 class KeyPressEventBuilder {
 public:
-    explicit KeyPressEventBuilder(Key key);
+	explicit KeyPressEventBuilder() = default;
 
-    KeyPressEventBuilder &addModifier(Modifier modifier);
+	KeyPressEventBuilder& addModifier(Modifier modifier);
 
-    KeyPressEvent build();
+	KeyPressEventBuilder& addKey(Key key);
+
+	KeyPressEvent build();
 
 private:
-    KeyPressEvent keyPressEvent;
+	KeyPressEvent keyPressEvent;
 };
 
 

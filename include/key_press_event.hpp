@@ -5,7 +5,7 @@
 #ifndef KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP
 #define KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP
 
-#include <vector>
+#include <unordered_set>
 #include "enums.hpp"
 
 #include "define_dll_scope.hpp"
@@ -14,17 +14,17 @@ class KeyPressEventBuilder;
 
 class mDLLIMPORTEXPORT KeyPressEvent {
 public:
-    bool isKeyPressed(Key key) const;
+	bool isKeyPressed(Key key) const;
 
-    bool isModifierPressed(Modifier modifier) const;
+	bool isModifierPressed(Modifier modifier) const;
 
 private:
-    explicit KeyPressEvent(Key key);
+	explicit KeyPressEvent() = default;
 
-    Key pressedKey;
-    std::vector<Modifier> modifiersPressed;
+	std::unordered_set<int> keysPressed;
+	std::unordered_set<int> modifiersPressed;
 
-    friend class KeyPressEventBuilder;
+	friend class KeyPressEventBuilder;
 };
 
 #endif //KEY_EVENT_HANDLER_KEY_PRESS_EVENT_HPP

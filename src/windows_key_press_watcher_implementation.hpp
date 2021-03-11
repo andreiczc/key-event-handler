@@ -9,7 +9,9 @@
 
 class WindowsKeyPressWatcherImplementation : public KeyPressWatcherImplementation {
 public:
-    KeyPressEvent monitorKeypress() override;
+	KeyPressEvent monitorKeypress() override;
+
+	explicit WindowsKeyPressWatcherImplementation() = default;
 };
 
 

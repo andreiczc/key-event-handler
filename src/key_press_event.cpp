@@ -6,15 +6,10 @@
 
 #include <algorithm>
 
-KeyPressEvent::KeyPressEvent(Key key) : pressedKey(key) {}
-
-
 bool KeyPressEvent::isModifierPressed(Modifier modifier) const {
-    const auto iterator = std::find(this->modifiersPressed.begin(),
-                                    this->modifiersPressed.end(), modifier);
-    return iterator != this->modifiersPressed.end();
+	return this->modifiersPressed.contains(static_cast<int>(modifier));
 }
 
 bool KeyPressEvent::isKeyPressed(Key key) const {
-    return key == this->pressedKey;
+	return this->keysPressed.contains(static_cast<int>(key));
 }
